@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.glue.AWSGlue;
 import com.amazonaws.services.glue.AWSGlueClientBuilder;
-import com.amazonaws.services.glue.model.StartCrawlerRequest;
 import com.amazonaws.services.glue.model.StartJobRunRequest;
 import com.amazonaws.services.glue.model.StartJobRunResult;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -54,7 +53,6 @@ public class NotificationHandler implements RequestHandler<S3Event, String> {
 
 		context.getLogger().log("Event generated is [" +event.toJson()+ "]");
 
-		// Get the object from the event and fetch bucketName and fileName
 		String bucketName   = event.getRecords().get(0).getS3().getBucket().getName();
 		String fileKey     = event.getRecords().get(0).getS3().getObject().getKey();
 		StringBuilder inProcessFiles = new StringBuilder();
@@ -97,8 +95,6 @@ public class NotificationHandler implements RequestHandler<S3Event, String> {
 			}
 
 			inProcessFiles = inProcessFiles.deleteCharAt(inProcessFiles.length()-1);
-
-			awsGlue.startCrawler(new StartCrawlerRequest().withName(configMap.get("CRAWLER")));
 
 			context.getLogger().log("Starting Glue job [" +configMap.get("JOB")+ "] for files [" +inProcessFiles.toString()+ "]");
 
