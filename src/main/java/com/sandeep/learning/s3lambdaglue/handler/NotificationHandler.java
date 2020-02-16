@@ -131,9 +131,6 @@ public class NotificationHandler implements RequestHandler<S3Event, String> {
 		Item item = configTable.getItem("CONFIG_KEY", "JOB");
 		configMap.put("JOB", item.getString("CONFIG_VALUE"));
 
-		item = configTable.getItem("CONFIG_KEY", "CRAWLER");
-		configMap.put("CRAWLER", item.getString("CONFIG_VALUE"));
-
 		item = configTable.getItem("CONFIG_KEY", "READY-DIR-PATH");
 		configMap.put("READY-DIR-PATH", item.getString("CONFIG_VALUE"));
 
